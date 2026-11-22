@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAM 1 · Autómata linealmente acotado · Estación Chomsky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nivel.css">
+  <link rel="stylesheet" href="css/tema.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="cabinet" style="--nivel:#ffc247">
+    <div class="hud">
+      <a class="volver" href="index.html">◀ VOLVER A LA SALA</a>
+      <span><i class="rec">●</i> CAM 1</span>
+      <span>NIVEL 1 DE 4</span>
+    </div>
+
+    <header class="n-head">
+      <h1 class="n-title" data-t="AUTÓMATA ACOTADO">AUTÓMATA ACOTADO</h1>
+      <p class="n-sub">Tipo 1 · Lenguajes sensibles al contexto · Memoria: la cinta de la entrada, ni una celda más</p>
+    </header>
+
+    <section class="panel">
+      <h2>1 · Definición</h2>
+      <p>Un <b>autómata linealmente acotado (ALA)</b> es una máquina de Turing cuya cinta mide <b>exactamente lo que mide la entrada</b>, encerrada entre dos delimitadores <b>⊢</b> y <b>⊣</b> que no se pueden sobrescribir ni cruzar. El cabezal se mueve en ambos sentidos, lee y <b>reescribe</b> símbolos, así que puede «tachar» lo que ya comparó.</p>
+      <p><b>¿Por qué puede con aⁿbⁿcⁿ?</b> Una pila solo permite comparar dos cantidades: al desapilar las <i>a</i> contra las <i>b</i> se pierde la cuenta que haría falta para las <i>c</i>. En cambio, el ALA marca una letra de cada tipo por vuelta y vuelve a empezar, usando la propia cinta como memoria (proporcional a la entrada). Aun así no es tan potente como una máquina de Turing: solo reconoce lenguajes sensibles al contexto (tipo 1).</p>
+      <ol class="pasos">
+        <li>El cabezal empieza sobre ⊢ en el estado inicial q₀.</li>
+        <li>Según (estado, símbolo leído), la máquina escribe un símbolo, se mueve a la izquierda o a la derecha y cambia de estado.</li>
+        <li>Acepta si llega al estado qa. Rechaza si no hay transición o si el cabezal intenta cruzar ⊢ o ⊣.</li>
+      </ol>
+      <pre id="tupla" class="tupla" aria-label="Definición formal del autómata linealmente acotado"></pre>
+      <h3>Qué hace cada estado</h3>
+      <ul id="notas" class="notas"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>2 · Lenguaje o función</h2>
+      <div class="fila">
+        <label for="lenguaje">Elige uno:</label>
+        <select id="lenguaje"></select>
+        <span id="param-caja" class="param"><label for="param" id="param-etq"></label><input id="param" size="6" autocomplete="off"><span id="param-ayuda" class="ayuda"></span><button type="button" class="btn btn--small" id="aplicar">Aplicar</button></span>
+      </div>
+      <p id="descripcion" class="desc"></p>
+      <p id="aviso" class="aviso" role="alert"></p>
+    </section>
+
+    <section class="panel">
+      <h2>3 · Simulación</h2>
+      <div class="fila">
+        <label for="cadena">Entrada:</label>
+        <input id="cadena" maxlength="24" size="16" autocomplete="off" spellcheck="false">
+        <button type="button" class="btn btn--small" id="cargar">Cargar</button>
+      </div>
+      <div class="ejemplos">
+        <span class="ayuda" id="ej-ok-etq"></span><span id="ej-ok" class="chips-ej"></span>
+        <span class="ayuda" id="ej-no-etq"></span><span id="ej-no" class="chips-ej"></span>
+      </div>
+      <div id="alfabetos" class="alfa"></div>
+
+      <div id="cinta" class="cinta" aria-label="Cinta acotada con delimitadores"></div>
+      <div id="estados" class="estados" aria-label="Estados de la máquina"></div>
+      <p id="info" class="info"></p>
+
+      <div class="controles">
+        <button type="button" class="btn btn--small" id="reiniciar">⏮ Reiniciar</button>
+        <button type="button" class="btn btn--small" id="paso">▶ Paso</button>
+        <button type="button" class="btn btn--small" id="auto">▶▶ Auto</button>
+        <button type="button" class="btn btn--small" id="fin">⏭ Hasta el final</button>
+        <label class="vel">Velocidad <input type="range" id="vel" min="1" max="10" value="5"></label>
+      </div>
+      <p id="resultado" class="resultado espera" role="status"></p>
+
+      <div class="tablas">
+        <div><h3>Transiciones δ</h3>
+          <div id="delta-caja" class="caja-tabla"><table id="delta" class="tabla"></table></div>
+          <p class="ayuda">(estado, lee) → (pasa a, escribe, mueve). D = derecha, I = izquierda, N = quieto. La fila ámbar es la regla usada.</p></div>
+        <div><h3>Traza paso a paso</h3>
+          <div id="traza-caja" class="caja-tabla"><table class="tabla"><thead><tr><th>#</th><th>Estado</th><th>Lee</th><th>Escribe</th><th>Mueve</th><th>Cinta (cabezal entre [ ])</th></tr></thead><tbody id="traza"></tbody></table></div></div>
+      </div>
+    </section>
+
+    <footer class="foot"><a href="nivel-0.html">Siguiente: Nivel 0, máquina de Turing ▶</a></footer>
+  </main>
+
+  <script src="js/core/lba.js"></script>
+  <script src="js/ui/maquina.js"></script>
+  <script src="js/ui/nivel1.js"></script>
+</body>
+</html>

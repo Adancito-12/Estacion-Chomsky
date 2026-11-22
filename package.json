@@ -1,0 +1,10 @@
+{
+  "name": "estacion-chomsky",
+  "version": "1.0.0",
+  "description": "Simulador educativo de la Jerarquía de Chomsky: AFD, autómata de pila, autómata linealmente acotado y máquina de Turing.",
+  "private": true,
+  "scripts": {
+    "test": "node tests/motores.test.js",
+    "start": "python3 -m http.server 8000"
+  }
+}

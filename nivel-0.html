@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAM 0 · Máquina de Turing · Estación Chomsky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nivel.css">
+  <link rel="stylesheet" href="css/tema.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="cabinet" style="--nivel:#ff5c8a">
+    <div class="hud">
+      <a class="volver" href="index.html">◀ VOLVER A LA SALA</a>
+      <span><i class="rec">●</i> CAM 0</span>
+      <span>NIVEL 0 DE 4</span>
+    </div>
+
+    <header class="n-head">
+      <h1 class="n-title" data-t="MÁQUINA DE TURING">MÁQUINA DE TURING</h1>
+      <p class="n-sub">Tipo 0 · Lenguajes recursivamente enumerables · Memoria: una cinta infinita</p>
+    </header>
+
+    <section class="panel">
+      <h2>1 · Definición</h2>
+      <p>Una <b>máquina de Turing (MT)</b> tiene una <b>cinta infinita</b> hacia ambos lados, un <b>cabezal</b> que lee, escribe y se mueve (izquierda, derecha o quieto) y un conjunto de estados. Empieza en q₀ con la entrada escrita en la cinta; todo lo demás es blanco (␣). Se detiene al llegar a un estado de aceptación o cuando no hay transición.</p>
+      <p><b>Dos usos:</b> como <i>aceptador</i> decide si una cadena pertenece a un lenguaje, y como <i>calculadora</i> deja el resultado de una función escrito en la cinta (aquí, suma unaria e incremento binario). Es el modelo de cómputo más general: reconoce los lenguajes recursivamente enumerables (tipo 0). Puede no detenerse nunca, por eso la simulación corta a los 5000 pasos.</p>
+      <ol class="pasos">
+        <li>La entrada se escribe en la cinta y el cabezal queda sobre su primer símbolo, en el estado q₀.</li>
+        <li>Según (estado, símbolo leído), escribe un símbolo, mueve el cabezal (D, I o N) y cambia de estado. Si hace falta, la cinta «crece» hacia cualquier lado.</li>
+        <li>Si llega a qa se detiene aceptando; si no hay transición, se detiene sin aceptar.</li>
+      </ol>
+      <pre id="tupla" class="tupla" aria-label="Definición formal de la máquina de Turing"></pre>
+      <h3>Qué hace cada estado</h3>
+      <ul id="notas" class="notas"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>2 · Lenguaje o función</h2>
+      <div class="fila">
+        <label for="lenguaje">Elige uno:</label>
+        <select id="lenguaje"></select>
+        <span id="param-caja" class="param"><label for="param" id="param-etq"></label><input id="param" size="6" autocomplete="off"><span id="param-ayuda" class="ayuda"></span><button type="button" class="btn btn--small" id="aplicar">Aplicar</button></span>
+      </div>
+      <p id="descripcion" class="desc"></p>
+      <p id="aviso" class="aviso" role="alert"></p>
+    </section>
+
+    <section class="panel">
+      <h2>3 · Simulación</h2>
+      <div class="fila">
+        <label for="cadena">Entrada:</label>
+        <input id="cadena" maxlength="24" size="16" autocomplete="off" spellcheck="false">
+        <button type="button" class="btn btn--small" id="cargar">Cargar</button>
+      </div>
+      <div class="ejemplos">
+        <span class="ayuda" id="ej-ok-etq"></span><span id="ej-ok" class="chips-ej"></span>
+        <span class="ayuda" id="ej-no-etq"></span><span id="ej-no" class="chips-ej"></span>
+      </div>
+      <div id="alfabetos" class="alfa"></div>
+
+      <div id="cinta" class="cinta cinta-inf" aria-label="Cinta infinita con el cabezal en el centro"></div>
+      <div id="estados" class="estados" aria-label="Estados de la máquina"></div>
+      <p id="info" class="info"></p>
+
+      <div class="controles">
+        <button type="button" class="btn btn--small" id="reiniciar">⏮ Reiniciar</button>
+        <button type="button" class="btn btn--small" id="paso">▶ Paso</button>
+        <button type="button" class="btn btn--small" id="auto">▶▶ Auto</button>
+        <button type="button" class="btn btn--small" id="fin">⏭ Hasta el final</button>
+        <label class="vel">Velocidad <input type="range" id="vel" min="1" max="10" value="5"></label>
+      </div>
+      <p id="resultado" class="resultado espera" role="status"></p>
+
+      <div class="tablas">
+        <div><h3>Transiciones δ</h3>
+          <div id="delta-caja" class="caja-tabla"><table id="delta" class="tabla"></table></div>
+          <p class="ayuda">(estado, lee) → (pasa a, escribe, mueve). D = derecha, I = izquierda, N = quieto. La fila ámbar es la regla usada.</p></div>
+        <div><h3>Traza paso a paso</h3>
+          <div id="traza-caja" class="caja-tabla"><table class="tabla"><thead><tr><th>#</th><th>Estado</th><th>Lee</th><th>Escribe</th><th>Mueve</th><th>Cinta (cabezal entre [ ])</th></tr></thead><tbody id="traza"></tbody></table></div></div>
+      </div>
+    </section>
+
+    <footer class="foot"><a href="index.html">¡Última cámara! Volver a la sala ◀</a></footer>
+  </main>
+
+  <script src="js/core/turing.js"></script>
+  <script src="js/ui/maquina.js"></script>
+  <script src="js/ui/nivel0.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAM 3 · Autómata finito · Estación Chomsky</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nivel.css">
+  <link rel="stylesheet" href="css/tema.css">
+  <script src="js/tema.js"></script>
+</head>
+<body>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="cabinet">
+    <div class="hud">
+      <a class="volver" href="index.html">◀ VOLVER A LA SALA</a>
+      <span><i class="rec">●</i> CAM 3</span>
+      <span>NIVEL 3 DE 4</span>
+    </div>
+
+    <header class="n-head">
+      <h1 class="n-title" data-t="AUTÓMATA FINITO">AUTÓMATA FINITO</h1>
+      <p class="n-sub">Tipo 3 · Lenguajes regulares · Memoria: solo el estado actual</p>
+    </header>
+
+    <section class="panel">
+      <h2>1 · Definición</h2>
+      <p>Un <b>autómata finito determinista (AFD)</b> lee la cadena de izquierda a derecha, un símbolo a la vez. No puede volver atrás ni anotar nada: lo único que recuerda es <b>en qué estado está</b>. Por eso solo reconoce los lenguajes regulares.</p>
+      <ol class="pasos">
+        <li>Empieza en el estado inicial q₀.</li>
+        <li>Por cada símbolo, la función de transición δ dice a qué estado pasar.</li>
+        <li>Al terminar la cadena, la <b>acepta</b> si está en un estado final; si no, la rechaza.</li>
+      </ol>
+      <pre id="tupla" class="tupla" aria-label="Definición formal del autómata"></pre>
+    </section>
+
+    <section class="panel">
+      <h2>2 · Lenguaje</h2>
+      <div class="fila">
+        <label for="lenguaje">Elige uno:</label>
+        <select id="lenguaje"></select>
+        <span id="param-caja" class="param"><label for="param" id="param-etq"></label><input id="param" size="6" autocomplete="off"><span id="param-ayuda" class="ayuda"></span><button type="button" class="btn btn--small" id="aplicar">Aplicar</button></span>
+      </div>
+      <p id="descripcion" class="desc"></p>
+      <p id="aviso" class="aviso" role="alert"></p>
+    </section>
+
+    <section class="panel">
+      <h2>3 · Simulación</h2>
+      <div class="fila">
+        <label for="cadena">Cadena:</label>
+        <input id="cadena" maxlength="24" size="16" autocomplete="off" spellcheck="false">
+        <button type="button" class="btn btn--small" id="cargar">Cargar</button>
+      </div>
+      <div class="ejemplos">
+        <span class="ayuda">Aceptadas:</span><span id="ej-ok" class="chips-ej"></span>
+        <span class="ayuda">Rechazadas:</span><span id="ej-no" class="chips-ej"></span>
+      </div>
+
+      <div id="cinta" class="cinta" aria-label="Cadena de entrada"></div>
+      <p id="info" class="info"></p>
+      <svg id="diagrama" class="diagrama" viewBox="0 0 700 440" role="img" aria-label="Diagrama de estados del autómata"></svg>
+
+      <div class="controles">
+        <button type="button" class="btn btn--small" id="reiniciar">⏮ Reiniciar</button>
+        <button type="button" class="btn btn--small" id="paso">▶ Paso</button>
+        <button type="button" class="btn btn--small" id="auto">▶▶ Auto</button>
+        <label class="vel">Velocidad <input type="range" id="vel" min="1" max="10" value="5"></label>
+      </div>
+      <p id="resultado" class="resultado espera" role="status"></p>
+
+      <div class="tablas">
+        <div><h3>Transiciones δ</h3><table id="delta" class="tabla"></table><p class="ayuda">→ inicial · * final · la celda ámbar es la transición usada</p></div>
+        <div><h3>Traza paso a paso</h3>
+          <div id="traza-caja" class="caja-traza"><table class="tabla"><thead><tr><th>#</th><th>Estado</th><th>Lee</th><th>Pasa a</th></tr></thead><tbody id="traza"></tbody></table></div></div>
+      </div>
+    </section>
+
+    <footer class="foot"><a href="nivel-2.html">Siguiente: Nivel 2, autómata de pila ▶</a></footer>
+  </main>
+
+  <script src="js/core/afd.js"></script>
+  <script src="js/ui/diagrama.js"></script>
+  <script src="js/ui/nivel3.js"></script>
+</body>
+</html>
