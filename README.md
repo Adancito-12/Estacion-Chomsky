@@ -15,7 +15,7 @@ Simulador educativo e interactivo de la **Jerarquía de Chomsky**. Cada nivel es
 
 ## Autores
 
-- _Completar: nombres, curso y fecha de entrega._
+- _Adalberto Velaides Rodriguez - Autómatas y Lenguajes de la Computación, 22 de noviembre del 2026._
 
 ## Cómo ejecutarlo
 
